@@ -7,7 +7,7 @@ import sys
 class Form(QWidget):
     def __init__(self, anc):
         super().__init__()
-        uic.loadUi('addEditCoffeeForm.ui', self)
+        uic.loadUi('UI/addEditCoffeeForm.ui', self)
         self.pushButton.clicked.connect(self.close)
         self.pushButton_2.clicked.connect(self.u)
         self.anc = anc
@@ -15,7 +15,7 @@ class Form(QWidget):
     def u(self):
         a = [self.lineEdit.text(), self.lineEdit_2.text(), self.lineEdit_3.text(),
              self.lineEdit_4.text(), self.lineEdit_5.text(), self.lineEdit_6.text(), self.lineEdit_7.text()]
-        con = sqlite3.connect('coffee.sqlite')
+        con = sqlite3.connect('data/coffee.sqlite')
         cur = con.cursor()
         if cur.execute("""SELECT * FROM coffee WHERE ID = ?""", (a[0],)).fetchone():
             for i, v in enumerate(['ID', 'Название', 'Степень_обжарки', 'Молотый_в_зернах', 'Описание_вкуса', 'Цена',
@@ -45,7 +45,7 @@ class Form(QWidget):
 class MyWidget(QMainWindow):
     def __init__(self):
         super().__init__()
-        uic.loadUi('main.ui', self)
+        uic.loadUi('UI/main.ui', self)
         self.update()
         self.pushButton.clicked.connect(self.t)
 
@@ -54,7 +54,7 @@ class MyWidget(QMainWindow):
         self.form.show()
 
     def update(self):
-        con = sqlite3.connect("coffee.sqlite")
+        con = sqlite3.connect("data/coffee.sqlite")
         cur = con.cursor()
         self.tableWidget.setColumnCount(7)
         self.tableWidget.setRowCount(0)
